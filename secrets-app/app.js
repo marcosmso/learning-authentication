@@ -2,6 +2,7 @@
 const express = require('express');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+const encrypt = require('mongoose-encryption');
 
 const app = express();
 
@@ -12,10 +13,14 @@ app.set("view engine", "ejs");
 
 mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true, useUnifiedTopology: true });
 
-const userSchema = {
+const userSchema = new mongoose.Schema({
     email: String,
     password: String
-};
+});
+
+const secret = "Thisisoutlongsecret.";
+//adding encryption functionality to userSchema and defining fields to be encrypted
+userSchema.plugin(encrypt, {secret: secret, encryptedFields:["password"]}); 
 
 const User = new mongoose.model("User", userSchema);
 
