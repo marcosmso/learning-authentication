@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {},
+	"extensions": {
+		"recommendations": [
+			"donjayamanne.githistory",
+			"dcr30.lualinter",
+			"keyring.Lua",
+			"eamodio.gitlens",
+			"christian-kohler.path-intellisense",
+			"Gruntfuggly.todo-tree"
+		]
+	}
+}
