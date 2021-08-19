@@ -5,9 +5,9 @@ const ejs = require('ejs');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const findOrCreate = require('mongoose-findorcreate');
+
+const {User} = require(__dirname + "/models/user");
 
 const app = express();
 
@@ -28,8 +28,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
     clientID:     process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
-    // passReqToCallback   : true, 
+    callbackURL: "http://localhost:3000/auth/google/secrets", 
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo"
   },
   function(request, accessToken, refreshToken, profile, done) {
@@ -42,18 +41,6 @@ passport.use(new GoogleStrategy({
 
 mongoose.connect("mongodb://localhost:27017/userDB", {useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set("useCreateIndex", true);
-
-const userSchema = new mongoose.Schema({
-    email: String,
-    password: String,
-    googleId: String,
-    secret: String
-});
-
-userSchema.plugin(passportLocalMongoose);
-userSchema.plugin(findOrCreate);
-
-const User = new mongoose.model("User", userSchema);
 
 passport.use(User.createStrategy());
 
@@ -90,11 +77,6 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/secrets", (req, res) => {
-//    if(req.isAuthenticated()){
-//        res.render("secrets");
-//    } else {
-//        res.redirect("/login");
-//    }
 
     User.find({"secret":{$ne:null}}, function(err, foundUsers){
         if(err){
