@@ -1,0 +1,33 @@
+Level 1 security: Username & Password only
+
+> Create user in register page. User is registered in a mongo database.
+(mongoose)
+> Passwords are stores as plain text in database
+> User can login, if she has already registered. 
+
+Level 2 security: Encryption
+
+> mongoose-Encryption
+> Passwords are stores encrypted
+> encryption key is still exposed in code github
+Encryption is performed using AES-256-CBC with a random, unique initialization vector for each operation. Authentication is performed using HMAC-SHA-512.
+
+Level 3: Env variables
+
+> Using environment variables for api keys
+> using .env NPM moodule
+> put .env file in .gitignore
+
+Level 4: saving Hashed passwords
+> stoped using encryption for passwords
+> started to use hashing for passwords security
+> passwords are saved hashed
+> md5 npm module
+
+Level 5:
+> Salting rounds
+> bcrypyt npm module
+
+Level 6:
+> passport
+> sessions and cookies
