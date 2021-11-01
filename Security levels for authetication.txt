@@ -1,3 +1,5 @@
+Notes: security in authetication
+
 Level 1 security: Username & Password only
 
 > Create user in register page. User is registered in a mongo database.
